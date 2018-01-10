@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="flag-icon.css">
+    <link rel="stylesheet" href="estilos.css">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Quicksand" rel="stylesheet">
+    <title>Conversor de divisas</title>
+</head>
+<body class="w3-container quick-sand" ng-app="exchangeRate">
+    <div ng-controller="controlador">
+        <center>
+            <h1 class="pacifico"><img src="divisas.png" alt="logo"/> Conversor de divisas</h1>
+            <h2 class="pacifico">{{date}}</h2>
+            <h3 class="pacifico">Iván Calvo Pérez</h3>
+        </center>
+        
+        <div class="w3-row top-space">
+            <div class="w3-col m5">
+                <h3>Monedas</h3>
+                <table class="w3-table-all">
+                    <thead>
+                        <tr class="w3-red">
+                            <th>Añadir moneda</th>
+                            <th>Moneda</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="i in keys | orderBy: i">
+                        <td><input type="checkbox" ng-model="rates[i][flag]"></td>
+                        <td><span ng-class="'flag-icon flag-icon-'+i.toLowerCase()"></span> {{i}}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="w3-col m2">
+                <div style="border-left:1px solid white;height:500px"></div>
+            </div>
+            
+            <div class="w3-col m5">
+                <h3>La moneda actual es {{base}}  <span ng-class="'flag-icon flag-icon-'+base.toLowerCase()"></span></h3>                
+                <table class="w3-table-all">
+                    <thead>
+                        <tr class="w3-blue">
+                            <th>Moneda</th>
+                            <th>Cantidad</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="i in keys" ng-show="rates[i][flag]">
+                        <td><span ng-class="'flag-icon flag-icon-'+i.toLowerCase()"></span> {{i}}</td>
+                        <td><input type="number" ng-model="rates[i][input]" ng-click="change(i)"></td>
+                        <td ng-if="i !== base" ng-show="base">{{rates[i][value] * rates[base][input]}}</td>
+                        <td ng-if="i === base">{{rates[base][input]}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
